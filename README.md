@@ -53,7 +53,7 @@ chmod +x control.sh
 ./control.sh start
 ~~~
 
-### Paso 4 opcional
+### Paso 4 (opcional)
 
 Chequear que se estén cargando los datos a la db de PostGres
 dbname: mydb
@@ -82,3 +82,42 @@ Un resultado similar a este se debería obtener
  2021-08-24 15:38:00+00 | Bitcoin |  48519.984
  2021-08-24 15:39:00+00 | Bitcoin |  48463.819
 ~~~
+
+### Paso 5: Configuración de Grafana
+
+Ingresar con el explorador a 
+~~~
+http://localhost:3030/login
+~~~
+user: admin
+password: admin
+
+Cuando dice crear una nueva password, poner skip.
+
+* Agregar un data source. La documentación oficial se encuentra en este [link](https://grafana.com/docs/grafana/v7.5/datasources/add-a-data-source/?utm_source=grafana_gettingstarted)
+* Ir a engranaje (ruedita) -> data source
+* Click en add data source
+* Seleccionar Postgres SQL db
+* Configuración de conexión.
+  * Name: PostgresSQL (dejar default)
+  * Host: localhost:5435 (en mi caso 192.168.1.8:5435 - esto está hardcodeado en el script de python también, tener cuidado y cambiar según corresponda)
+  * Database: mydb
+  * User: admin
+  * Password: admin
+  * TLS/SSL Mode: disable
+  * PostgresSQL Details
+    * Version: 12
+
+![](pictures/postgresql_connection_grafana_config.png)
+
+Al finalizar clickear save and test. Debería salir un mensaje que la conexión está ok.
+
+Crear el Dashboard, ir al + y clickear en import, upload json file `dashboard.json`.
+
+Automáticamente se verá el dashboard que incluye:
+* Cotización para cada timestamp cargado en la db
+* Media móvil con una ventana de 6 registros.
+* Máximo
+* Mínimo
+* Promedio
+Se puede elegir el intervalo de tiempo que se desee desde el panel de grafana
