@@ -1,6 +1,6 @@
 ## Objetivo
 
-Integrar las tecnologías trabajadas durante el seminario intensivo:
+Integrar las tecnologías trabajadas durante el seminario intensivo del ITBA:
 
 * Docker
 * PostgreSQL
@@ -10,7 +10,7 @@ La información se levanta via una open api
 
 ## Descripción
 
-* Datos de entra vía Open API de la cotización del bitcoin.
+* Datos de entrada vía [Open API](https://api.coindesk.com/v1/bpi/currentprice.json) de la cotización del bitcoin.
 * Se inyecta en una DB de PostgresSQL utilizando linux cronetab para que corra un script de python.
 * Se configuran las conexiones de DB y Grafana
 * Se crea un dashboard en grafana y se importa a través de un json.
@@ -22,4 +22,11 @@ La información se levanta via una open api
 Clonar el repo
 ~~~
 git clone https://github.com/estebanfw/tp-seminario
+~~~
+
+### Paso 2
+
+Build docker image desde dentro de la carpeta donde fue clonado el repo.
+~~~
+docker build . -t ubuntu/testing5
 ~~~
