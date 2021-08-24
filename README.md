@@ -20,7 +20,6 @@ La información se levanta via una open api
 ### Paso 1
 
 Clonar el repo
-'''
+~~~
 git clone https://github.com/estebanfw/tp-seminario
-'''
-
+~~~
