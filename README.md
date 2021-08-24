@@ -131,5 +131,5 @@ Finalmente el Dashboard queda configurado, sólo es cuestión de ir esperando qu
 Para parar y remover los containers se puede ejecutar
 
 ~~~
-./contro.sh stop
+./control.sh stop
 ~~~
