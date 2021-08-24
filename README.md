@@ -121,3 +121,7 @@ Automáticamente se verá el dashboard que incluye:
 * Mínimo
 * Promedio
 Se puede elegir el intervalo de tiempo que se desee desde el panel de grafana
+
+Finalmente el Dashboard queda configurado, sólo es cuestión de ir esperando que pasen los minutos y se carguen los datos.
+
+![](pictures/grafana_dashboard.png)
