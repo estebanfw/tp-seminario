@@ -13,7 +13,7 @@ La información se levanta via una open api
 * Datos de entrada vía [Open API](https://api.coindesk.com/v1/bpi/currentprice.json) de la cotización del bitcoin.
 * Se inyecta en una DB de PostgresSQL utilizando linux cronetab para que corra un script de python.
 * Se configuran las conexiones de DB y Grafana
-* Se crea un dashboard en grafana y se importa a través de un json.
+* Se importa a través de un json un Dashboard de Grafana creado previamente.
 
 ## Ambiente
 
