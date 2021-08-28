@@ -133,3 +133,21 @@ Para parar y remover los containers se puede ejecutar
 ~~~
 ./control.sh stop
 ~~~
+
+### Airflow
+
+Para inicializar el ambiente
+~~~
+echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
+~~~
+
+Luego ejecutar
+~~~
+docker-compose up airflow-init
+~~~
+Para levantar los contenedores ejecutar:
+~~~
+docker-compose up
+~~~
+
+Luego configurar Grafana como se indica en dicha sección.
