@@ -17,48 +17,57 @@ La información se levanta via una open api
 
 ## Ambiente
 
-### Paso 1
+### Paso 1: Repo
 
 Clonar el repo
 ~~~
 git clone https://github.com/estebanfw/tp-seminario
 ~~~
 
-### Paso 2
+### Paso 2: Inicializar Airflow
 
-Build docker image desde dentro de la carpeta donde fue clonado el repo.
+Para inicializar el ambiente
 ~~~
-docker build . -t ubuntu/testing5
+echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
 ~~~
-Para verificar si la imagen fue creada se puede correr el siguiente comando y verificar que esté listada.
-~~~
-docker image ls | grep ubuntu
-~~~
-Esta imagen de docker ya tiene cargado el script para conectarse a la API, configurada la conexión a la DB de PostgreSQL y configurado el crone con el job
-correspondiente para lanzar el script de python cada un minuto. El script de python tiene hardcodeado el localhost, muy probablemente tenga que cambiarlo cada usuario.
 
+Luego ejecutar
+~~~
+docker-compose up airflow-init
+~~~
+### Paso 3: Levantar contenedores
 
-### Paso 3
-
-Lanzar ambiente a través del script de bash.
+Para levantar los contenedores ejecutar:
+~~~
+docker-compose up
+~~~
 
 Aclaración de puertos elegidos:
 * PostgreSQL: puerto local 5035
 * Grafana: puerto local 3030
 
-Para iniciar el ambiente sólo se debe ejecutar.
+Luego configurar Grafana como se indica en dicha sección.
 
-~~~
-chmod +x control.sh
-./control.sh start
-~~~
+### Paso 4: Activar DAG de Airflow
 
-### Paso 4 (opcional)
+* Abrir el explorador `http://localhost:8080`
+* User: airflow
+* Password: airflow
+* Activar el DAG `getting data`
+
+![](pictures/dag_enable-disable.png)
+
+Una vez activado se debería ver de la siguiente manera:
+
+![](pictures/dag_enabled.png)
+
+
+### Paso 5: Verificar DB (opcional)
 
 Chequear que se estén cargando los datos a la db de PostGres
-dbname: mydb
-user: admin
-password: admin
+dbname: airflow
+user: airflow
+password: airflow
 table: btc
 
 Para entrar a la terminal de bash del contenedor se puede utilizar el siguiente comando.
@@ -67,7 +76,7 @@ docker exec -it tp-seminario_db_1 bash
 ~~~
 Dentro de la terminal:
 ~~~
-psql -U admin -d mydb
+psql -U airflow -d airflow
 ~~~
 Inicia psql y dentro realizar la query:
 ~~~
@@ -83,7 +92,9 @@ Un resultado similar a este se debería obtener
  2021-08-24 15:39:00+00 | Bitcoin |  48463.819
 ~~~
 
-### Paso 5: Configuración de Grafana
+
+
+### Paso 6: Grafana
 
 Ingresar con el explorador a 
 ~~~
@@ -101,14 +112,14 @@ Cuando dice crear una nueva password, poner skip.
 * Configuración de conexión.
   * Name: PostgresSQL (dejar default)
   * Host: localhost:5435 (en mi caso 192.168.1.8:5435 - esto está hardcodeado en el script de python también, tener cuidado y cambiar según corresponda)
-  * Database: mydb
-  * User: admin
-  * Password: admin
+  * Database: airflow
+  * User: airflow
+  * Password: airflow
   * TLS/SSL Mode: disable
   * PostgresSQL Details
     * Version: 12
 
-![](pictures/postgresql_connection_grafana_config.png)
+![](pictures/postgresql_connection_grafana_config_using_airflow.png)
 
 Al finalizar clickear save and test. Debería salir un mensaje que la conexión está ok.
 
@@ -126,28 +137,3 @@ Finalmente el Dashboard queda configurado, sólo es cuestión de ir esperando qu
 
 ![](pictures/grafana_dashboard.png)
 
-### Extras
-
-Para parar y remover los containers se puede ejecutar
-
-~~~
-./control.sh stop
-~~~
-
-### Airflow
-
-Para inicializar el ambiente
-~~~
-echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
-~~~
-
-Luego ejecutar
-~~~
-docker-compose up airflow-init
-~~~
-Para levantar los contenedores ejecutar:
-~~~
-docker-compose up
-~~~
-
-Luego configurar Grafana como se indica en dicha sección.
