@@ -55,11 +55,11 @@ Luego configurar Grafana como se indica en dicha sección.
 * Password: airflow
 * Activar el DAG `getting data`
 
-![](pictures/dag_enable-disable.png)
+![](pictures/dag-enable-disable.png)
 
 Una vez activado se debería ver de la siguiente manera:
 
-![](pictures/dag_enabled.png)
+![](pictures/dag-enabled.png)
 
 
 ### Paso 5: Verificar DB (opcional)
