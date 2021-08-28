@@ -137,3 +137,11 @@ Finalmente el Dashboard queda configurado, sólo es cuestión de ir esperando qu
 
 ![](pictures/grafana_dashboard.png)
 
+### Paso 7: Bajar contenedores
+
+Para detener los contenedores:
+
+~~~
+docker compose down
+~~~
+
